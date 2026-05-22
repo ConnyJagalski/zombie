@@ -1,0 +1,7 @@
+#hunger-bar, #stock-bar {
+    display: inline-block;
+    width: 100px;
+    height: 1rem;
+    border: solid black 1px;
+    border-radius: 2px;
+}
