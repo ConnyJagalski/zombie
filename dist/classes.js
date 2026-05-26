@@ -1,4 +1,5 @@
-import { meals, habitants } from './data';
+import * as helpers from "./helpers.js";
+import * as data from "./data.js";
 export class Shelter {
     hunger;
     stock;
@@ -29,21 +30,16 @@ export class Habitant {
     name;
     hunger;
     stock;
+    rats;
     veggie;
     diabetes;
     gluten;
     lactose;
-    static questions1 = ["Wie voll ist dein Vorrat?",
-        "Wie groß ist dein Hunger?"];
-    static questions2 = ["Bist du Vegetarier?",
-        "Hast du eine Glutenunverträglichkeit?",
-        "Verträgst du Milchprodukte?",
-        "Bist du Diabetiker?"
-    ];
-    constructor(name, hunger = 0, stock = 100, veggie, diabetes, gluten, lactose) {
+    constructor(name, hunger = 0, stock = 100, rats = false, veggie, diabetes, gluten, lactose) {
         this.name = name;
         this.hunger = hunger;
         this.stock = stock;
+        this.rats = rats;
         this.veggie = veggie;
         this.diabetes = diabetes;
         this.gluten = gluten;
@@ -70,12 +66,28 @@ export class Habitant {
         this.stock = value;
     }
     ;
-    static getQuestions1(index) {
-        return this.questions1[index];
+    getRats() {
+        return this.rats;
     }
     ;
-    static getQuestions2(index) {
-        return this.questions2[index];
+    setRats(value) {
+        this.rats = value;
+    }
+    ;
+    getVeggie() {
+        return this.veggie;
+    }
+    ;
+    getDiabetes() {
+        return this.diabetes;
+    }
+    ;
+    getGluten() {
+        return this.gluten;
+    }
+    ;
+    getLactose() {
+        return this.lactose;
     }
     ;
 }
@@ -116,4 +128,27 @@ export class Food {
     ;
 }
 ;
+export class Game {
+    shelter;
+    habitants;
+    food;
+    constructor() {
+        this.shelter = new Shelter();
+        this.habitants = helpers.generateHabitants(data.habitants);
+        this.food = helpers.generateFood(data.meals);
+    }
+    ;
+    getShelter() {
+        return this.shelter;
+    }
+    ;
+    getHabitants() {
+        return this.habitants;
+    }
+    ;
+    getFood() {
+        return this.food;
+    }
+    ;
+}
 //# sourceMappingURL=classes.js.map

@@ -1,4 +1,5 @@
-import { meals, habitants } from './data';
+import * as helpers from "./helpers.js";
+import * as data from "./data.js";
 
 export class Shelter {
     constructor(
@@ -24,22 +25,15 @@ export class Shelter {
 };
 
 export class Habitant {
-    private static questions1: string[] = ["Wie voll ist dein Vorrat?",
-                        "Wie groß ist dein Hunger?"];
-    private static questions2: string[] = ["Bist du Vegetarier?",
-                        "Hast du eine Glutenunverträglichkeit?",
-                        "Verträgst du Milchprodukte?",
-                        "Bist du Diabetiker?"
-    ];
-
     constructor(
         private name: string,
         private hunger: number = 0,
         private stock: number = 100,
+        private rats: boolean = false,
         private veggie: boolean,
         private diabetes: boolean,
         private gluten: boolean,
-        private lactose: boolean
+        private lactose: boolean,
     ) {};
 
     public getName(): string {
@@ -62,12 +56,28 @@ export class Habitant {
         this.stock = value;
     };
 
-    public static getQuestions1(index: number) {
-        return this.questions1[index];
+    public getRats(): boolean {
+        return this.rats;
     };
 
-    public static getQuestions2(index: number) {
-        return this.questions2[index];
+    public setRats(value: boolean): void {
+        this.rats = value;
+    };
+
+    public getVeggie(): boolean {
+        return this.veggie;
+    };
+
+    public getDiabetes():boolean {
+        return this.diabetes;
+    };
+
+    public getGluten(): boolean {
+        return this.gluten;
+    };
+
+    public getLactose(): boolean {
+        return this.lactose;
     };
 };
 
@@ -100,3 +110,27 @@ export class Food {
         return this.milk;
     };
 };
+
+export class Game {
+    private readonly shelter: Shelter;
+    private readonly habitants: Habitant[];
+    private readonly food: Food[];
+
+    constructor() {
+        this.shelter = new Shelter();
+        this.habitants = helpers.generateHabitants(data.habitants);
+        this.food = helpers.generateFood(data.meals);
+    };
+
+    public getShelter(): Shelter {
+        return this.shelter;
+    };
+
+    public getHabitants(): Habitant[] {
+        return this.habitants;
+    };
+
+    public getFood(): Food[] {
+        return this.food;
+    };
+}

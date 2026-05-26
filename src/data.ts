@@ -29,4 +29,4 @@ export const meals = [
     }
 ];
 
-export const habitants = ["Albert", "Berta", "Charlie", "Daniel", "Erika", "Friedrich", "Gerda", "Horst", "Jule"];
+export const habitants = ["Albert", "Berta", "Charlie", "Daniel", "Erika", "Friedrich", "Gerda", "Horst", "Isabelle", "Jule"];

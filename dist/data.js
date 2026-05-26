@@ -28,5 +28,5 @@ export const meals = [
         milk: false
     }
 ];
-export const habitants = ["Albert", "Berta", "Charlie", "Daniel", "Erika", "Friedrich", "Gerda", "Horst", "Jule"];
+export const habitants = ["Albert", "Berta", "Charlie", "Daniel", "Erika", "Friedrich", "Gerda", "Horst", "Isabelle", "Jule"];
 //# sourceMappingURL=data.js.map
