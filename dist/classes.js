@@ -1,5 +1,5 @@
-import * as helpers from "./helpers.js";
 import * as data from "./data.js";
+import * as start from "./startGame.js";
 export class Shelter {
     hunger;
     stock;
@@ -131,11 +131,9 @@ export class Food {
 export class Game {
     shelter;
     habitants;
-    food;
     constructor() {
         this.shelter = new Shelter();
-        this.habitants = helpers.generateHabitants(data.habitants);
-        this.food = helpers.generateFood(data.meals);
+        this.habitants = start.generateHabitants(data.habitants);
     }
     ;
     getShelter() {
@@ -146,9 +144,6 @@ export class Game {
         return this.habitants;
     }
     ;
-    getFood() {
-        return this.food;
-    }
-    ;
 }
+;
 //# sourceMappingURL=classes.js.map

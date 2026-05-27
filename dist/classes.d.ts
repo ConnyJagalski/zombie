@@ -45,10 +45,8 @@ export declare class Food {
 export declare class Game {
     private readonly shelter;
     private readonly habitants;
-    private readonly food;
     constructor();
     getShelter(): Shelter;
     getHabitants(): Habitant[];
-    getFood(): Food[];
 }
 //# sourceMappingURL=classes.d.ts.map

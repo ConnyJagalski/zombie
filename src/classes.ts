@@ -1,5 +1,5 @@
-import * as helpers from "./helpers.js";
 import * as data from "./data.js";
+import * as start from "./startGame.js";
 
 export class Shelter {
     constructor(
@@ -114,12 +114,10 @@ export class Food {
 export class Game {
     private readonly shelter: Shelter;
     private readonly habitants: Habitant[];
-    private readonly food: Food[];
 
     constructor() {
         this.shelter = new Shelter();
-        this.habitants = helpers.generateHabitants(data.habitants);
-        this.food = helpers.generateFood(data.meals);
+        this.habitants = start.generateHabitants(data.habitants);
     };
 
     public getShelter(): Shelter {
@@ -129,8 +127,4 @@ export class Game {
     public getHabitants(): Habitant[] {
         return this.habitants;
     };
-
-    public getFood(): Food[] {
-        return this.food;
-    };
-}
+};
