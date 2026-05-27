@@ -33,12 +33,6 @@ export function showStatus(currentShelter: classes.Shelter) {
     domStockBar.style.setProperty('--fill-level', `${stock}%`);
 };
 
-export function showValue(event: Event) {
-    const button = event.currentTarget as HTMLElement;
-    const valueSpan = button.nextElementSibling as HTMLElement;
-    valueSpan.style.visibility = "visible";
-};
-
 export function calcStatus(currentHabitants: classes.Habitant[], currentShelter: classes.Shelter) {
     let totalHunger = 0;
     let totalStock = 0;
@@ -55,25 +49,19 @@ export function calcStatus(currentHabitants: classes.Habitant[], currentShelter:
     currentShelter.setStock(totalStock);
 };
 
-export function disableOthers(event: Event) {
-    backgroundFunctions.allHabitantsDom.current!.forEach(element => {
-        const target = event.currentTarget as HTMLElement;
-
-        if(element.id !== target.id) {
-            element.classList.add("disabled");
-        } else {
-            element.classList.add("chosen");
-        }
-    })
-};
-
-export function enableAll() {
-    backgroundFunctions.allHabitantsDom.current!.forEach(element => {element.classList.remove("disabled", "chosen")})
-};
-
-export function hungerForward() {
+export function takeStock() {
     backgroundFunctions.habitantState.current!.forEach(habitant => {
-        const currentHunger = habitant.getHunger();
-        habitant.setHunger(currentHunger +1);
+        const hunger = habitant.getHunger();
+        const stock = habitant.getStock();
+
+        if (hunger > 24) {
+            if (stock >= hunger) {
+                habitant.setStock(stock - hunger);
+                habitant.setHunger(0);
+            } else {
+                habitant.setStock(0);
+                habitant.setHunger(hunger - stock);
+            }
+        }
     })
 };

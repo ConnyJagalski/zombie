@@ -2,6 +2,7 @@ import * as classes from "./classes.js";
 import * as helpers from "./helpers.js";
 import * as data from "./data.js";
 import * as start from "./startGame.js";
+import * as round from "./round.js";
 export const gameState = {
     current: null
 };
@@ -26,10 +27,13 @@ export function startGame() {
 }
 ;
 export function chooseHabitant(event) {
-    helpers.disableOthers(event);
+    round.disableOthers(event);
 }
 ;
 export function newRound() {
-    helpers.enableAll();
+    round.enableAll();
+    start.sabotageHabitant(habitantState.current);
+    helpers.calcStatus(habitantState.current, shelterState.current);
+    helpers.showStatus(shelterState.current);
 }
 //# sourceMappingURL=backgroundFunctions.js.map

@@ -6,9 +6,6 @@ export declare function random(length: number): number;
 export declare function randomBoolean(length: number): boolean;
 export declare function generateFood(meals: object): classes.Food[];
 export declare function showStatus(currentShelter: classes.Shelter): void;
-export declare function showValue(event: Event): void;
 export declare function calcStatus(currentHabitants: classes.Habitant[], currentShelter: classes.Shelter): void;
-export declare function disableOthers(event: Event): void;
-export declare function enableAll(): void;
-export declare function hungerForward(): void;
+export declare function takeStock(): void;
 //# sourceMappingURL=helpers.d.ts.map

@@ -2,7 +2,8 @@
     box-sizing: border-box;
 }
 
-#hunger-bar, #stock-bar {
+#hunger-bar,
+#stock-bar {
     display: inline-block;
     width: 100px;
     height: 1rem;
@@ -26,7 +27,7 @@
 }
 
 .habitant-container {
-    width: 250px;
+    width: 300px;
     box-shadow: 0 0 5px 0 gray;
     padding: 10px;
     display: flex;
@@ -52,4 +53,8 @@ h3 {
 
 .chosen {
     border: 2px solid black;
+}
+
+select {
+    margin-right: 5px;
 }
