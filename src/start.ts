@@ -59,8 +59,8 @@ export function createDataRow(titleText: string, name: string, valueText: any) {
 
 export function createHabitantElement(input: classes.Habitant) {
     const name = input.getName();
-    const hunger = input.getHunger();
-    const stock = input.getStock();
+    const hunger = () => input.getHunger();
+    const stock = () => input.getStock();
     const veggie = input.getVeggie();
     const gluten = input.getGluten();
     const diabetes = input.getDiabetes();
@@ -87,14 +87,14 @@ export function createHabitantElement(input: classes.Habitant) {
     const nameParagraph = document.createElement("h3");
     nameParagraph.textContent = name;
 
-    const hungerRow = createDataRow("Hunger", name, hunger);
-    const stockRow = createDataRow("Vorräte", name, stock);
+    const hungerRow = createDataRow("Hunger", name, hunger());
+    const stockRow = createDataRow("Vorräte", name, stock());
     const veggieRow = createDataRow("Veggie", name, veggie);
     const diabetesRow = createDataRow("Diabetes", name, diabetes);
     const glutenRow = createDataRow("Glutenunverträglichkeit", name, gluten);
     const lactoseRow = createDataRow("Laktoseintoleranz", name, lactose);
     const poisonRow = createDataRow("Rattengift", name, poisonCount);
-
+    
     const mealRow = document.createElement("div");
     mealRow.className = "value-container";
     const mealSelect = document.createElement("select");
@@ -105,9 +105,8 @@ export function createHabitantElement(input: classes.Habitant) {
         mealSelect.appendChild(option);
     });
     const giveMeal = document.createElement("button");
-    giveMeal.className = "meal-button";
     giveMeal.textContent = "Mahlzeit geben";
-    giveMeal.addEventListener("click", () => {round.checkMeal(mealSelect.value, input);});
+    giveMeal.addEventListener("click", () => {round.checkMeal(mealSelect.value, input); giveMeal.setAttribute("disabled", "")});
     
     mealRow.append(mealSelect, giveMeal);
 
@@ -122,6 +121,7 @@ export function createHabitantElement(input: classes.Habitant) {
     });
 
     const elementArray = [hungerRow.row, stockRow.row, veggieRow.row, diabetesRow.row, glutenRow.row, lactoseRow.row, mealRow, poisonRow.row];
+    const statusButtons = [hungerRow.title, stockRow.title, giveMeal, poisonRow.title];
     const hungerStockButtons = [hungerRow.title, stockRow.title];
     const foodIntolerances = [veggieRow.title, diabetesRow.title, glutenRow.title, lactoseRow.title];
 
@@ -129,12 +129,16 @@ export function createHabitantElement(input: classes.Habitant) {
         element.addEventListener("click", (e) => { round.showValue(e), round.hungerForward() });
     });
 
+    statusButtons.forEach(element => {
+        element.className = "status-button"
+    });
+
     hungerRow.title.addEventListener("click", () => {
-        hungerRow.value.textContent = `${hunger}`
+        hungerRow.value.textContent = `${hunger()}`
     });
 
     stockRow.title.addEventListener("click", () => {
-        stockRow.value.textContent = `${stock}`
+        stockRow.value.textContent = `${stock()}`
     });
 
     habitantContainer.append(nameParagraph, ...elementArray);

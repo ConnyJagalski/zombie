@@ -42,7 +42,7 @@ export function newRound() {
 export function end(ergebnis = "Verloren") {
     helpers.calcStatus(habitantState.current, shelterState.current);
     alert(`Ergebnis: ${ergebnis} \n
-         Hunger: ${shelterState.current.getHunger()} \n
+         Hunger: ${parseFloat(shelterState.current.getHunger().toFixed(1))} \n
          Vorräte: ${shelterState.current.getStock()} \n
          Bewohner mit Rattenplage: ${shelterState.current.getInfected()}`);
     endGame.resetGame();

@@ -21,9 +21,8 @@ export function disableOthers(event) {
 ;
 export function enableAll() {
     backgroundFunctions.allHabitantsDom.current.forEach(element => { element.classList.remove("disabled", "chosen"); });
-    const poisonButton = document.querySelectorAll(".poison-button");
-    const mealButton = document.querySelectorAll(".meal-button");
-    [...poisonButton, ...mealButton].forEach(element => {
+    const button = document.querySelectorAll(".status-button");
+    [...button].forEach(element => {
         element.removeAttribute("disabled");
     });
 }
@@ -71,19 +70,11 @@ export function givePoison(habitant) {
 ;
 export function poisonHabitant(habitant) {
     const hunger = habitant.getHunger();
-    const stock = habitant.getStock();
     if (hunger < 81) {
         habitant.setHunger(hunger + 20);
     }
     else {
         habitant.setHunger(100);
-    }
-    ;
-    if (stock > 19) {
-        habitant.setStock(stock - 20);
-    }
-    else {
-        habitant.setStock(0);
     }
     ;
 }

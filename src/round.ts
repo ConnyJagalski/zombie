@@ -3,8 +3,8 @@ import * as helpers from "./helpers.js";
 import * as classes from "./classes.js";
 
 export function showValue(event: Event) {
-    const button = event.currentTarget as HTMLElement;
-    const valueSpan = button.nextElementSibling as HTMLElement;
+    const button = event.currentTarget as HTMLButtonElement;
+    const valueSpan = button.nextElementSibling as HTMLSpanElement;
     valueSpan.style.visibility = "visible";
 };
 
@@ -23,10 +23,9 @@ export function disableOthers(event: Event) {
 export function enableAll() {
     backgroundFunctions.allHabitantsDom.current!.forEach(element => {element.classList.remove("disabled", "chosen")});
 
-    const poisonButton = document.querySelectorAll(".poison-button");
-    const mealButton = document.querySelectorAll(".meal-button");
+    const button = document.querySelectorAll(".status-button");
 
-    [...poisonButton, ...mealButton].forEach(element => {
+    [...button].forEach(element => {
         element.removeAttribute("disabled");
     });
 };
@@ -72,18 +71,10 @@ export function givePoison(habitant: classes.Habitant) {
 
 export function poisonHabitant(habitant: classes.Habitant) {
     const hunger = habitant.getHunger();
-    const stock = habitant.getStock();
 
     if(hunger < 81) {
         habitant.setHunger(hunger +20);
     } else {
         habitant.setHunger(100);
     };
-
-    if(stock > 19) {
-        habitant.setStock(stock -20);
-    } else {
-        habitant.setStock(0);
-    };
-
 }
