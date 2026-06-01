@@ -1,11 +1,13 @@
 import * as data from "./data.js";
-import * as start from "./startGame.js";
+import * as start from "./start.js";
 export class Shelter {
     hunger;
     stock;
-    constructor(hunger = 0, stock = 100) {
+    infected;
+    constructor(hunger = 0, stock = 100, infected = 0) {
         this.hunger = hunger;
         this.stock = stock;
+        this.infected = infected;
     }
     ;
     getHunger() {
@@ -24,6 +26,14 @@ export class Shelter {
         this.stock = value;
     }
     ;
+    getInfected() {
+        return this.infected;
+    }
+    ;
+    setInfected(value) {
+        this.infected = value;
+    }
+    ;
 }
 ;
 export class Habitant {
@@ -35,7 +45,8 @@ export class Habitant {
     diabetes;
     gluten;
     lactose;
-    constructor(name, hunger = 0, stock = 100, rats = false, veggie, diabetes, gluten, lactose) {
+    poisonCount;
+    constructor(name, hunger = 0, stock = 100, rats = false, veggie, diabetes, gluten, lactose, poisonCount = 0) {
         this.name = name;
         this.hunger = hunger;
         this.stock = stock;
@@ -44,6 +55,7 @@ export class Habitant {
         this.diabetes = diabetes;
         this.gluten = gluten;
         this.lactose = lactose;
+        this.poisonCount = poisonCount;
     }
     ;
     getName() {
@@ -90,6 +102,14 @@ export class Habitant {
         return this.lactose;
     }
     ;
+    getPoisonCount() {
+        return this.poisonCount;
+    }
+    ;
+    increasePoisonCount() {
+        const currentPoisonCount = this.poisonCount;
+        this.poisonCount = currentPoisonCount + 1;
+    }
 }
 ;
 export class Food {
@@ -131,9 +151,11 @@ export class Food {
 export class Game {
     shelter;
     habitants;
+    food;
     constructor() {
         this.shelter = new Shelter();
         this.habitants = start.generateHabitants(data.habitants);
+        this.food = start.generateFood(data.meals);
     }
     ;
     getShelter() {
@@ -142,6 +164,10 @@ export class Game {
     ;
     getHabitants() {
         return this.habitants;
+    }
+    ;
+    getFood() {
+        return this.food;
     }
     ;
 }

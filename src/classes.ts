@@ -1,10 +1,11 @@
 import * as data from "./data.js";
-import * as start from "./startGame.js";
+import * as start from "./start.js";
 
 export class Shelter {
     constructor(
         private hunger: number = 0,
-        private stock: number = 100
+        private stock: number = 100,
+        private infected: number = 0
     ) {};
 
     public getHunger(): number {
@@ -22,6 +23,14 @@ export class Shelter {
     public setStock(value: number): void {
         this.stock = value;
     };
+
+    public getInfected(): number {
+        return this.infected;
+    };
+
+    public setInfected(value: number): void {
+        this.infected = value;
+    };
 };
 
 export class Habitant {
@@ -34,6 +43,7 @@ export class Habitant {
         private diabetes: boolean,
         private gluten: boolean,
         private lactose: boolean,
+        private poisonCount: number = 0
     ) {};
 
     public getName(): string {
@@ -79,6 +89,16 @@ export class Habitant {
     public getLactose(): boolean {
         return this.lactose;
     };
+
+    public getPoisonCount(): number {
+        return this.poisonCount;
+    };
+
+    public increasePoisonCount(): void {
+        const currentPoisonCount = this.poisonCount;
+
+        this.poisonCount = currentPoisonCount + 1;
+    }
 };
 
 export class Food {
@@ -114,10 +134,12 @@ export class Food {
 export class Game {
     private readonly shelter: Shelter;
     private readonly habitants: Habitant[];
+    private readonly food: Food[];
 
     constructor() {
         this.shelter = new Shelter();
         this.habitants = start.generateHabitants(data.habitants);
+        this.food = start.generateFood(data.meals);
     };
 
     public getShelter(): Shelter {
@@ -126,5 +148,9 @@ export class Game {
 
     public getHabitants(): Habitant[] {
         return this.habitants;
+    };
+
+    public getFood(): Food[] {
+        return this.food;
     };
 };

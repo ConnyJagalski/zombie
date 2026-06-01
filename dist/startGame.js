@@ -1,11 +1,17 @@
 import * as classes from "./classes.js";
 import * as helpers from "./helpers.js";
-import * as backgroundFunctions from "./backgroundFunctions.js";
+import * as backgroundFunctions from "./background.js";
 import * as data from "./data.js";
 import * as round from "./round.js";
 export function generateHabitants(names) {
     return names.map(name => {
-        return new classes.Habitant(name, undefined, undefined, undefined, helpers.randomBoolean(names.length), helpers.randomBoolean(names.length), helpers.randomBoolean(names.length), helpers.randomBoolean(names.length));
+        return new classes.Habitant(name, undefined, undefined, undefined, helpers.randomBoolean(names.length), helpers.randomBoolean(names.length), helpers.randomBoolean(names.length), helpers.randomBoolean(names.length), undefined);
+    });
+}
+;
+export function generateFood(meals) {
+    return Object.values(meals).map((value) => {
+        return new classes.Food(value.name, value.veggie, value.gluten, value.sweet, value.milk);
     });
 }
 ;
@@ -68,18 +74,22 @@ export function createHabitantElement(input) {
     const mealSelect = document.createElement("select");
     data.meals.forEach(meal => {
         const option = document.createElement("option");
-        option.value = meal.name.toLowerCase().replace(" ", "-");
+        option.value = meal.name;
         option.textContent = meal.name;
         mealSelect.appendChild(option);
     });
     const giveMeal = document.createElement("button");
+    giveMeal.className = "meal-button";
     giveMeal.textContent = "Mahlzeit geben";
-    giveMeal.addEventListener("click", round.checkMeal);
+    giveMeal.addEventListener("click", () => { round.checkMeal(mealSelect.value, input); giveMeal.setAttribute("disabled", ""); });
     const poisonRow = document.createElement("div");
     poisonRow.className = "value-container";
     const poisonButton = document.createElement("button");
+    poisonButton.className = "poison-button";
     poisonButton.textContent = "Rattengift auslegen";
-    poisonButton.addEventListener("click", round.givePoison);
+    const poisonValue = document.createElement("span");
+    poisonValue.textContent = `${input.getPoisonCount()}`;
+    poisonButton.addEventListener("click", () => { round.givePoison(input); input.increasePoisonCount(); poisonValue.textContent = `${input.getPoisonCount()}`; poisonButton.setAttribute("disabled", ""); });
     hungerRow.append(hungerTitle, hungerValue);
     stockRow.append(stockTitle, stockValue);
     veggieRow.append(veggieTitle, veggieValue);
@@ -87,7 +97,7 @@ export function createHabitantElement(input) {
     glutenRow.append(glutenTitle, glutenValue);
     lactoseRow.append(lactoseTitle, lactoseValue);
     mealRow.append(mealSelect, giveMeal);
-    poisonRow.append(poisonButton);
+    poisonRow.append(poisonButton, poisonValue);
     const elementArray = [hungerRow, stockRow, veggieRow, diabetesRow, glutenRow, lactoseRow, mealRow, poisonRow];
     const hungerStockButtons = [hungerTitle, stockTitle];
     const foodIntolerances = [veggieTitle, diabetesTitle, glutenTitle, lactoseTitle];
@@ -103,20 +113,26 @@ export function createHabitantElement(input) {
     habitantContainer.append(nameParagraph, ...elementArray);
     return habitantContainer;
 }
-export function showHabitants(currentHabitants) {
-    currentHabitants.forEach(element => {
+export function showHabitants(habitant) {
+    habitant.forEach(element => {
         const habitantElement = createHabitantElement(element);
         helpers.domHabitants.appendChild(habitantElement);
     });
 }
 ;
-export function sabotageHabitant(currentHabitants) {
-    const index = helpers.random(currentHabitants.length) - 1;
-    const chosenHabitant = currentHabitants[index];
+export function sabotageHabitant(habitant) {
+    const index = helpers.random(habitant.length);
+    const chosenHabitant = habitant[index];
+    const stock = chosenHabitant.getStock();
     if (chosenHabitant.getRats() === false) {
-        chosenHabitant.setHunger(chosenHabitant.getHunger() + 50);
-        chosenHabitant.setStock(chosenHabitant.getStock() - 50);
         chosenHabitant.setRats(true);
+        if (stock > 49) {
+            chosenHabitant.setStock(stock - 50);
+        }
+        else {
+            chosenHabitant.setStock(0);
+        }
+        ;
     }
     ;
 }

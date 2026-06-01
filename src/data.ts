@@ -14,11 +14,11 @@ export const meals = [
         milk: true
     },
     {
-        name: "Spaghetti Bolognese",
-        veggie: false,
+        name: "Spaghetti Sahnesauce",
+        veggie: true,
         gluten: true,
         sweet: false,
-        milk: false
+        milk: true
     },
     {
         name: "Haferbrei",

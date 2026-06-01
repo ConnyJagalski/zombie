@@ -1,11 +1,14 @@
 export declare class Shelter {
     private hunger;
     private stock;
-    constructor(hunger?: number, stock?: number);
+    private infected;
+    constructor(hunger?: number, stock?: number, infected?: number);
     getHunger(): number;
     setHunger(value: number): void;
     getStock(): number;
     setStock(value: number): void;
+    getInfected(): number;
+    setInfected(value: number): void;
 }
 export declare class Habitant {
     private name;
@@ -16,7 +19,8 @@ export declare class Habitant {
     private diabetes;
     private gluten;
     private lactose;
-    constructor(name: string, hunger: number | undefined, stock: number | undefined, rats: boolean | undefined, veggie: boolean, diabetes: boolean, gluten: boolean, lactose: boolean);
+    private poisonCount;
+    constructor(name: string, hunger: number | undefined, stock: number | undefined, rats: boolean | undefined, veggie: boolean, diabetes: boolean, gluten: boolean, lactose: boolean, poisonCount?: number);
     getName(): string;
     getHunger(): number;
     setHunger(value: number): void;
@@ -28,6 +32,8 @@ export declare class Habitant {
     getDiabetes(): boolean;
     getGluten(): boolean;
     getLactose(): boolean;
+    getPoisonCount(): number;
+    increasePoisonCount(): void;
 }
 export declare class Food {
     private name;
@@ -45,8 +51,10 @@ export declare class Food {
 export declare class Game {
     private readonly shelter;
     private readonly habitants;
+    private readonly food;
     constructor();
     getShelter(): Shelter;
     getHabitants(): Habitant[];
+    getFood(): Food[];
 }
 //# sourceMappingURL=classes.d.ts.map

@@ -4,8 +4,7 @@ export declare const domStockBar: HTMLElement;
 export declare const domHabitants: HTMLElement;
 export declare function random(length: number): number;
 export declare function randomBoolean(length: number): boolean;
-export declare function generateFood(meals: object): classes.Food[];
-export declare function showStatus(currentShelter: classes.Shelter): void;
-export declare function calcStatus(currentHabitants: classes.Habitant[], currentShelter: classes.Shelter): void;
+export declare function showStatus(shelter: classes.Shelter): void;
+export declare function calcStatus(habitants: classes.Habitant[], shelter: classes.Shelter): void;
 export declare function takeStock(): void;
 //# sourceMappingURL=helpers.d.ts.map

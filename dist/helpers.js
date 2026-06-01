@@ -1,5 +1,5 @@
 import * as classes from "./classes.js";
-import * as backgroundFunctions from "./backgroundFunctions.js";
+import * as background from "./background.js";
 export const domHungerBar = document.getElementById("hunger-bar");
 export const domStockBar = document.getElementById("stock-bar");
 export const domHabitants = document.getElementById("habitants");
@@ -11,34 +11,40 @@ export function randomBoolean(length) {
     return random(length) < 6;
 }
 ;
-export function generateFood(meals) {
-    return Object.values(meals).map((value) => {
-        return new classes.Food(value.name, value.veggie, value.gluten, value.sweet, value.milk);
-    });
-}
-;
-export function showStatus(currentShelter) {
-    const hunger = currentShelter.getHunger();
-    const stock = currentShelter.getStock();
+export function showStatus(shelter) {
+    const hunger = shelter.getHunger();
+    const stock = shelter.getStock();
     domHungerBar.style.setProperty('--fill-level', `${hunger}%`);
     domStockBar.style.setProperty('--fill-level', `${stock}%`);
 }
 ;
-export function calcStatus(currentHabitants, currentShelter) {
+export function calcStatus(habitants, shelter) {
     let totalHunger = 0;
     let totalStock = 0;
-    currentHabitants.forEach(elemet => {
-        const relativeHunger = elemet.getHunger() * 0.1;
-        const relativeStock = elemet.getStock() * 0.1;
+    let totalInfected = 0;
+    habitants.forEach(element => {
+        const hunger = element.getHunger();
+        const stock = element.getStock();
+        if (hunger === 100 && stock === 0) {
+            background.end("Verloren");
+        }
+        ;
+        if (element.getRats()) {
+            totalInfected++;
+        }
+        ;
+        const relativeHunger = hunger * 0.1;
+        const relativeStock = stock * 0.1;
         totalHunger = totalHunger + relativeHunger;
         totalStock = totalStock + relativeStock;
     });
-    currentShelter.setHunger(totalHunger);
-    currentShelter.setStock(totalStock);
+    shelter.setInfected(totalInfected);
+    shelter.setHunger(totalHunger);
+    shelter.setStock(totalStock);
 }
 ;
 export function takeStock() {
-    backgroundFunctions.habitantState.current.forEach(habitant => {
+    background.habitantState.current.forEach(habitant => {
         const hunger = habitant.getHunger();
         const stock = habitant.getStock();
         if (hunger > 24) {

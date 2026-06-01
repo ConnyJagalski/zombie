@@ -1,9 +1,8 @@
 import * as classes from "./classes.js";
 import * as helpers from "./helpers.js";
-import * as data from "./data.js";
-import * as start from "./startGame.js";
+import * as start from "./start.js";
 import * as round from "./round.js";
-import * as endGame from "./endGame.js";
+import * as endGame from "./end.js";
 export const gameState = {
     current: null
 };
@@ -13,13 +12,16 @@ export const habitantState = {
 export const shelterState = {
     current: null
 };
-export const food = data.meals.map(meal => new classes.Food(meal.name, meal.veggie, meal.gluten, meal.sweet, meal.milk));
+export const foodState = {
+    current: null
+};
 export const allHabitantsDom = { current: null };
 export function startGame() {
     document.getElementById("start-game").setAttribute("disabled", "");
     gameState.current = new classes.Game();
     habitantState.current = gameState.current.getHabitants();
     shelterState.current = gameState.current.getShelter();
+    foodState.current = gameState.current.getFood();
     start.sabotageHabitant(habitantState.current);
     start.showHabitants(habitantState.current);
     helpers.calcStatus(habitantState.current, shelterState.current);
@@ -37,11 +39,12 @@ export function newRound() {
     helpers.calcStatus(habitantState.current, shelterState.current);
     helpers.showStatus(shelterState.current);
 }
-export function end(ergebnis) {
+export function end(ergebnis = "Verloren") {
     helpers.calcStatus(habitantState.current, shelterState.current);
-    alert(`Hunger: ${shelterState.current.getHunger()} \n
+    alert(`Ergebnis: ${ergebnis} \n
+         Hunger: ${shelterState.current.getHunger()} \n
          Vorräte: ${shelterState.current.getStock()} \n
          Bewohner mit Rattenplage: ${shelterState.current.getInfected()}`);
     endGame.resetGame();
 }
-//# sourceMappingURL=backgroundFunctions.js.map
+//# sourceMappingURL=background.js.map
