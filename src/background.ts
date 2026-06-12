@@ -51,7 +51,7 @@ export function end(ergebnis: string = "Verloren") {
     alert(
         `Ergebnis: ${ergebnis} \n
          Hunger: ${parseFloat(shelterState.current!.getHunger().toFixed(1))} \n
-         Vorräte: ${shelterState.current!.getStock()} \n
+         Vorräte: ${parseFloat(shelterState.current!.getStock().toFixed(1))} \n
          Bewohner mit Rattenplage: ${shelterState.current!.getInfected()}`
     );
 

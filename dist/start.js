@@ -23,7 +23,7 @@ export function createDataRow(titleText, name, valueText) {
     const value = document.createElement("span");
     value.id = `${titleText.toLowerCase()}-${name}`;
     value.textContent = valueText;
-    value.style.visibility = "visible";
+    value.style.visibility = "hidden";
     title.addEventListener("click", () => {
         title.setAttribute("disabled", "");
     });
@@ -94,7 +94,7 @@ export function createHabitantElement(input) {
     const statusButtons = [hungerRow.title, stockRow.title, giveMeal, poisonRow.title];
     const hungerStockButtons = [hungerRow.title, stockRow.title];
     const foodIntolerances = [veggieRow.title, diabetesRow.title, glutenRow.title, lactoseRow.title];
-    [...hungerStockButtons, ...foodIntolerances].forEach(element => {
+    [...hungerStockButtons, ...foodIntolerances, poisonRow.title].forEach(element => {
         element.addEventListener("click", (e) => { round.showValue(e), round.hungerForward(); });
     });
     statusButtons.forEach(element => {
